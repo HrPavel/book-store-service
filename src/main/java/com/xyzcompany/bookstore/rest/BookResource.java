@@ -15,7 +15,7 @@ import com.xyzcompany.bookstore.dto.BookRequest;
 import com.xyzcompany.bookstore.service.BookService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class BookResource {
 
     private BookService bookService;

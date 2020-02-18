@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.xyzcompany.bookstore.domain.Book;
 import com.xyzcompany.bookstore.dto.BookRequest;
+import com.xyzcompany.bookstore.exception.BookNotFoundException;
 import com.xyzcompany.bookstore.repository.BookRepository;
 import com.xyzcompany.bookstore.transformer.BookTransformer;
 
@@ -35,8 +36,7 @@ public class BookService {
     public Book update(final Integer id, final BookRequest bookRequest) {
         log.info("Start updating Book. BookID: {}, BookRequest: {}", id, bookRequest);
 
-        final Book book = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource Not Found"));
+        final Book book = findOneOrThrowException(id);
 
         transformer.transform(bookRequest, book);
 
@@ -47,7 +47,7 @@ public class BookService {
         log.debug("Start getting Book. BookID: {}", id);
 
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource Not Found"));
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 
     public List<Book> getBooks() {
@@ -55,5 +55,4 @@ public class BookService {
 
         return repository.findAll();
     }
-
 }
