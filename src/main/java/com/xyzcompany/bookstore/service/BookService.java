@@ -51,7 +51,7 @@ public class BookService {
     }
 
     public List<Book> getBooks() {
-        log.info("Get all books");
+        log.debug("Start getting all Books");
 
         return repository.findAll();
     }
